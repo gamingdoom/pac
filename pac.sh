@@ -21,7 +21,7 @@ case $args1 in
         fi
     ;;
     -A)
-        
+        #packages/pkgbase
     ;;
     *)
         echo 'No argument provided'
