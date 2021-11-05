@@ -38,6 +38,7 @@ case $args1 in
         fi
         cd /tmp/pac/$2
         su -c "makepkg -s" pac
+        #cat /tmp/pac/aura/.SRCINFO | grep "makedepends ="
     ;;
     *)
         echo 'No argument provided'
