@@ -11,7 +11,10 @@ if (($uid != 0)); then
     exit 2
 fi
 
-mkdir -p /tmp/pac/
+mkdir -p /tmp/pac/home/
+useradd pac -d /tmp/pac/home/
+chown -R pac /tmp/pac/
+chmod -R 775 /tmp/pac/
 
 case $args1 in
     -P*)
@@ -20,7 +23,6 @@ case $args1 in
             echo "Please use a pacman argument after -P. ex -PSy"
             exit 1
         else
-        echo $pacpass
         pacman $pacpass
         fi
     ;;
@@ -37,8 +39,14 @@ case $args1 in
             exit 3
         fi
         cd /tmp/pac/$2
-        su -c "makepkg -s" pac
-        #cat /tmp/pac/aura/.SRCINFO | grep "makedepends ="
+        makedepends=`cat /tmp/pac/$2/.SRCINFO | grep "makedepends = " | sed -e 's/makedepends = //g' | sed -r 's/\s+//g'`
+        depends=`cat /tmp/pac/$2/.SRCINFO | grep "\<depends\>" | sed -e 's/depends = //g' | sed -r 's/\s+//g'`
+        echo "Installing Make Dependencies"
+        pacman -S --needed $makedepends
+        echo "Installing Dependencies"
+        pacman -S --needed $depends
+        su -c "makepkg -s --skippgpcheck" pac
+        pacman -U $2*.pkg.tar.zst
     ;;
     *)
         echo 'No argument provided'
