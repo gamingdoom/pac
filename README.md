@@ -13,4 +13,6 @@
 # How do I install it?
 To install it quick just run this one-liner :
 
-```git clone https://github.com/gamingdoom/pac.git && cd pac && chmod +x pac && sudo ln -s `pwd`/pac /usr/bin/pac```
+```
+git clone https://github.com/gamingdoom/pac.git && cd pac && chmod +x pac && sudo ln -s `pwd`/pac /usr/bin/pac
+```
