@@ -1,5 +1,5 @@
 # What is pac?
- - Pac is a package manager that combines the aur and pacman
+ - Pac is a package manager that combines the aur and pacman in one shell script
  
  # How Do I use it?
  - You can use it like pacman by prepending ``P`` to the arguments like this for example :
@@ -13,4 +13,4 @@
 # How do I install it?
 To install it quick just run this one-liner :
 
-```git clone https://github.com/gamingdoom/pac.git && cd pac && sudo ln -s `pwd`/pac /usr/bin/pac```
+```git clone https://github.com/gamingdoom/pac.git && cd pac && chmod +x pac && sudo ln -s `pwd`/pac /usr/bin/pac```
