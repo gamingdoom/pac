@@ -4,7 +4,6 @@ args1=`echo $1 | cut -c1-2`
 pacpass=`echo $* | cut -c1-1,3-`
 uid=`id -u`
 pkgbase=$2 
-here=`pwd`
 
 if (($uid != 0)); then
     echo "Please run with root"
@@ -12,7 +11,7 @@ if (($uid != 0)); then
 fi
 
 mkdir -p /tmp/pac/home/
-useradd pac -d /tmp/pac/home/
+useradd pac -d /tmp/pac/home/ > /dev/null 2>&1
 chown -R pac /tmp/pac/
 chmod -R 775 /tmp/pac/
 
