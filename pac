@@ -23,15 +23,15 @@ aur()
         rm -r /tmp/pac/$1
         exit 3
     fi
-    cd /tmp/pac/$2
-    makedepends=`cat /tmp/pac/$2/.SRCINFO | grep "makedepends = " | sed -e 's/makedepends = //g' | sed -r 's/\s+//g'`
-    depends=`cat /tmp/pac/$2/.SRCINFO | grep "\<depends\>" | sed -e 's/depends = //g' | sed -r 's/\s+//g'`
+    cd /tmp/pac/$1
+    makedepends=`cat /tmp/pac/$1/.SRCINFO | grep "makedepends = " | sed -e 's/makedepends = //g' | sed -r 's/\s+//g'`
+    depends=`cat /tmp/pac/$1/.SRCINFO | grep "\<depends\>" | sed -e 's/depends = //g' | sed -r 's/\s+//g'`
     echo "Installing Make Dependencies"
     pacman -S --needed $makedepends
     echo "Installing Dependencies"
-    pacman -S --needed $depends
+    pacman -S --needed $makedepends
     su -c "makepkg -s --skippgpcheck" pac
-    pacman -U $2*.pkg.tar.zst
+    pacman -U $1*.pkg.tar.zst
 }
 
 mkdir -p /tmp/pac/home/
