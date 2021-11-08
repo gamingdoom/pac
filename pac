@@ -24,14 +24,21 @@ aur()
         exit 3
     fi
     cd /tmp/pac/$1
+    #parse .SRCINFO
     makedepends=`cat /tmp/pac/$1/.SRCINFO | grep "makedepends = " | sed -e 's/makedepends = //g' | sed -r 's/\s+//g'`
     depends=`cat /tmp/pac/$1/.SRCINFO | grep "\<depends\>" | sed -e 's/depends = //g' | sed -r 's/\s+//g'`
-    echo "Installing Make Dependencies"
-    pacman -S --needed $makedepends
-    echo "Installing Dependencies"
-    pacman -S --needed $makedepends
-    su -c "makepkg -s --skippgpcheck" pac
-    pacman -U $1*.pkg.tar.zst
+    optdepends=`cat /tmp/pac/$1/.SRCINFO | grep "\<optdepends\>" | sed -e 's/optdepends = //g' | sed -r 's/\s+//g' | sed -r 's/:.*//g'`
+    optdependsfrontend=`cat /tmp/pac/$1/.SRCINFO | grep "\<optdepends\>" | sed -e 's/optdepends = //g'`
+    echo "Installing Make Dependencies :"
+    echo $makedepends
+    #pacman -S --needed $makedepends
+    echo "Installing Dependencies :"
+    echo $depends 
+    #pacman -S --needed $makedepends
+    echo "Would you like to install the following optional dependencies?"
+    echo $optdependsfrontend
+    #su -c "makepkg -s --skippgpcheck" pac
+    #pacman -U $1*.pkg.tar.zst
 }
 
 mkdir -p /tmp/pac/home/
